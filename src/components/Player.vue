@@ -6,7 +6,6 @@
         </div>
         <button @click="playerAttack">Attack</button>
         <button>Special</button>
-        <p>Current Attack: {{ attack }}</p>
     </div>
 </template>
 
@@ -17,16 +16,24 @@
         data() {
             return {
                 health: 100,
-                attack: 1
+                minAttack: 1,
+                maxAttack: 4
             }
         },
         methods: {
             playerAttack() {
-                eventBus.$emit('playerHasAttacked', this.attack);
+                // Roll for damage and emit 'playerHasAttacked' trigger
+                var roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
+                eventBus.$emit('playerHasAttacked', roll);
+
+                // Emit 'printLog' trigger
+                eventBus.$emit('printLog', { text: 'Player did ' + roll + ' damage.' })
             }
         },
         created() {
+            // Listen for 'monsterHasAttacked' emit trigger
             eventBus.$on('monsterHasAttacked', (damage) => {
+                // Adjust the player's health
                 this.health -= damage;
             })
         }
