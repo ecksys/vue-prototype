@@ -22,27 +22,28 @@
         },
         methods: {
             playerAttack() {
-                // Roll for damage and emit 'playerHasAttacked' trigger
+                // Roll for damage and emit 'playerHasAttacked' trigger to Monster component
                 var roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
                 eventBus.$emit('playerHasAttacked', roll);
 
-                // Emit 'printLog' trigger
-                // Timestamp used to generate key for the v-bind:key
-                eventBus.$emit('printLog',
-                    {
-                        isPlayer: true,
-                        timestamp: 'P-' + Date.now(),
-                        text: 'Player did ' + roll + ' damage.'
-                    }
-                );
+                // Emit 'printLog' trigger to Log component
+                eventBus.$emit('printLog', {
+                    timestamp: 'P-' + Date.now(), // Timestamp used to generate key for the v-bind:key
+                    text: 'Player did ' + roll + ' damage.'
+                });
             }
         },
         created() {
-            // Listen for 'monsterHasAttacked' emit trigger
+            // Listen for 'monsterHasAttacked' emit trigger from Monster component
             eventBus.$on('monsterHasAttacked', (damage) => {
-                // Adjust the player's health
-                this.health -= damage;
-            })
+                this.health -= damage; // Adjust the player's health
+
+                // Check if player's health is equal or less than 0
+                if(this.health <= 0) {
+                    this.health = 0; // Health should never go below 0
+                    eventBus.$emit('playerHasDied'); // Emit 'playerHasDied' trigger to parent App
+                }
+            });
         }
     }
 </script>

@@ -17,16 +17,15 @@
             }
         },
         created() {
-            // Listen for 'printLog' emit trigger
+            // Listen for 'printLog' emit trigger from Player/Monster components
             eventBus.$on('printLog', (log) => {
                 // If the log has more than 9 entries, remove the last one
                 if(this.logs.length > 9) {
                     this.logs.splice(-1,1);
                 }
 
-                // Add the latest log to the start of the array
-                this.logs.unshift(log);
-            })
+                this.logs.unshift(log); // Add the latest log to the start of the array
+            });
         }
     }
 </script>

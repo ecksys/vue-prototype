@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import { eventBus } from './main';
 	import Player from './components/Player.vue';
 	import Monster from './components/Monster.vue';
 	import Log from './components/Log.vue';
@@ -27,6 +28,16 @@
 			'AppMonster': Monster,
 			'AppLog': Log,
 			'AppUpgrades': Upgrades
+		},
+		created() {
+			// Listen for 'playerHasDied' emit trigger from Player component
+			eventBus.$on('playerHasDied', () => {
+				alert('You died!');
+			}),
+			// Listen for 'monsterHasDied' emit trigger from Monster component
+			eventBus.$on('monsterHasDied', () => {
+				alert('The monster is dead!');
+			})
 		}
 	}
 </script>
