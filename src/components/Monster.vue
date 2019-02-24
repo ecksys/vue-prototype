@@ -29,7 +29,14 @@
                 eventBus.$emit('monsterHasAttacked', roll);
 
                 // Emit 'printLog' trigger
-                eventBus.$emit('printLog', { text: 'Monster did ' + roll + ' damage.' })
+                // Timestamp used to generate key for the v-bind:key
+                eventBus.$emit('printLog',
+                    {
+                        isPlayer: false,
+                        timestamp: 'M-' + Date.now(),
+                        text: 'Monster did ' + roll + ' damage.'
+                    }
+                );
             });
         }
     }

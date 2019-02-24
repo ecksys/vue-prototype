@@ -2,7 +2,7 @@
     <div class="col">
         <h2>Combat Log</h2>
         <ul>
-            <li v-for="log in logs">{{ log.text }}</li>
+            <li v-for="log in logs" :key="log.timestamp">{{ log.text }}</li>
         </ul>
     </div>
 </template>

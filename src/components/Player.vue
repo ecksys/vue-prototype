@@ -27,7 +27,14 @@
                 eventBus.$emit('playerHasAttacked', roll);
 
                 // Emit 'printLog' trigger
-                eventBus.$emit('printLog', { text: 'Player did ' + roll + ' damage.' })
+                // Timestamp used to generate key for the v-bind:key
+                eventBus.$emit('printLog',
+                    {
+                        isPlayer: true,
+                        timestamp: 'P-' + Date.now(),
+                        text: 'Player did ' + roll + ' damage.'
+                    }
+                );
             }
         },
         created() {
