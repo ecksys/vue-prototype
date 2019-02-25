@@ -32,12 +32,6 @@
                     // Roll for damage and emit 'monsterHasAttacked' trigger to Player component
                     const roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
                     eventBus.$emit('monsterHasAttacked', roll);
-    
-                    // Emit 'printLog' trigger to Log component
-                    eventBus.$emit('printLog', {
-                        timestamp: 'M-' + Date.now(), // Timestamp used to generate key for the v-bind:key
-                        text: 'Monster did ' + roll + ' damage.'
-                    });
                 }
             })
         }

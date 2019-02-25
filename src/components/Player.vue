@@ -17,7 +17,8 @@
             return {
                 health: 100,
                 minDmg: 1,
-                maxDmg: 1
+                maxDmg: 1,
+                armorRating: 0
             }
         },
         methods: {
@@ -36,6 +37,7 @@
         created() {
             // Listen for 'monsterHasAttacked' emit trigger from Monster component
             eventBus.$on('monsterHasAttacked', (damage) => {
+                (damage - this.armorRating) < 0 ? damage = 0 : damage -= this.armorRating; // Adjust the damage after applying armor rating
                 this.health -= damage; // Adjust the player's health
 
                 // Check if player's health is equal or less than 0
@@ -43,11 +45,31 @@
                     this.health = 0; // Health should never go below 0
                     eventBus.$emit('playerHasDied'); // Emit 'playerHasDied' trigger to parent App
                 }
+                else {
+                    if(damage == 0) {
+                        // Emit 'printLog' trigger to Log component
+                        eventBus.$emit('printLog', {
+                            timestamp: 'M-' + Date.now(), // Timestamp used to generate key for the v-bind:key
+                            text: 'You deflected the monster\'s attack!'
+                        });
+                    }
+                    else {
+                        // Emit 'printLog' trigger to Log component
+                        eventBus.$emit('printLog', {
+                            timestamp: 'M-' + Date.now(), // Timestamp used to generate key for the v-bind:key
+                            text: 'Monster did ' + damage + ' damage.'
+                        });
+                    }
+                }
             }),
             // Listen for 'updatePlayerDamage' emit trigger from Upgrade component
             eventBus.$on('updatePlayerDamage', (weapon) => {
                 this.minDmg = weapon.minDmg;
                 this.maxDmg = weapon.maxDmg;
+            }),
+            // Listen for 'updatePlayerArmor' emit trigger from Upgrade component
+            eventBus.$on('updatePlayerArmor', (armor) => {
+                this.armorRating = armor.rating;
             })
         }
     }
