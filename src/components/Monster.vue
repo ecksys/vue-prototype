@@ -30,7 +30,7 @@
                 }
                 else {
                     // Roll for damage and emit 'monsterHasAttacked' trigger to Player component
-                    var roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
+                    const roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
                     eventBus.$emit('monsterHasAttacked', roll);
     
                     // Emit 'printLog' trigger to Log component
@@ -39,7 +39,7 @@
                         text: 'Monster did ' + roll + ' damage.'
                     });
                 }
-            });
+            })
         }
     }
 </script>

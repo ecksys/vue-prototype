@@ -16,14 +16,14 @@
         data() {
             return {
                 health: 100,
-                minAttack: 1,
-                maxAttack: 4
+                minDmg: 1,
+                maxDmg: 1
             }
         },
         methods: {
             playerAttack() {
                 // Roll for damage and emit 'playerHasAttacked' trigger to Monster component
-                var roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
+                const roll = Math.max(Math.floor((Math.random() * this.maxDmg)) + 1, this.minDmg);
                 eventBus.$emit('playerHasAttacked', roll);
 
                 // Emit 'printLog' trigger to Log component
@@ -43,7 +43,12 @@
                     this.health = 0; // Health should never go below 0
                     eventBus.$emit('playerHasDied'); // Emit 'playerHasDied' trigger to parent App
                 }
-            });
+            }),
+            // Listen for 'updatePlayerDamage' emit trigger from Upgrade component
+            eventBus.$on('updatePlayerDamage', (weapon) => {
+                this.minDmg = weapon.minDmg;
+                this.maxDmg = weapon.maxDmg;
+            })
         }
     }
 </script>
