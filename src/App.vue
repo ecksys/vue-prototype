@@ -32,11 +32,19 @@
 		created() {
 			// Listen for 'playerHasDied' emit trigger from Player component
 			eventBus.$on('playerHasDied', () => {
-				alert('You died!');
+				// Emit 'printLog' trigger to Log component
+				eventBus.$emit('printLog', {
+					timestamp: Date.now(), // Timestamp used to generate key for the v-bind:key
+					text: 'You died!'
+				});
 			}),
 			// Listen for 'monsterHasDied' emit trigger from Monster component
 			eventBus.$on('monsterHasDied', () => {
-				alert('The monster is dead!');
+				// Emit 'printLog' trigger to Log component
+				eventBus.$emit('printLog', {
+					timestamp: Date.now(), // Timestamp used to generate key for the v-bind:key
+					text: 'You killed the monster!'
+				});
 			})
 		}
 	}
