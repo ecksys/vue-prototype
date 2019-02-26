@@ -1,6 +1,6 @@
 <template>
-    <div class="col">
-        <h2>Combat Log</h2>
+    <div class="col interface__panel">
+        <h2>Game Log</h2>
         <ul>
             <li v-for="log in logs" :key="log.timestamp">{{ log.text }}</li>
         </ul>

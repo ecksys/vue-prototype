@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div class="col interface__panel">
         <h2>Upgrades</h2>
         <div class="row">
             <div class="col">

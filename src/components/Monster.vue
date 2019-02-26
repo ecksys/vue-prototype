@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div class="col interface__panel">
         <h2>Monster</h2>
         <div class="progress">
             <div class="progress-bar bg-success" :style="{ width: health + '%' }">{{ health }}</div>
