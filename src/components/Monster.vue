@@ -18,6 +18,14 @@
                 maxDmg: 5
             }
         },
+        methods: {
+            // Method to reset the Monster component
+            newMonster() {
+                this.health = 100;
+                this.minDmg = 2;
+                this.maxDmg = 5;
+            }
+        },
         created() {
             // Listen for 'playerHasAttacked' emit trigger from Player component
             eventBus.$on('playerHasAttacked', (damage) => {
@@ -27,6 +35,7 @@
                 if(this.health <= 0) {
                     this.health = 0; // Health should never go below 0
                     eventBus.$emit('monsterHasDied'); // Emit 'playerHasDied' trigger to parent App
+                    this.newMonster(); // Reset the Monster component
                 }
                 else {
                     // Roll for damage and emit 'monsterHasAttacked' trigger to Player component
@@ -36,9 +45,7 @@
             }),
             // Listen for 'resetEverything' emit trigger from App
             eventBus.$on('resetEverything', () => {
-                this.health = 100;
-                this.minDmg = 2;
-                this.maxDmg = 5;
+                this.newMonster();
             })
         }
     }
