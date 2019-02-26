@@ -9,6 +9,9 @@ A simple browser-based game created using Vue.JS in order to explore and learn V
 - Fix header typo in the readme. Oops!
 - Add Bootstrap for UI.
 - Add starting interface layout with some components.
+- Add some basic combat functionality.
+- Add a way to reset the game. Because replayability is important!
+- Add a basic currency and upgrade system.
 
 ### v0.0
 
