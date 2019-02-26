@@ -25,7 +25,11 @@
                 }
 
                 this.logs.unshift(log); // Add the latest log to the start of the array
-            });
+            }),
+            // Listen for 'resetEverything' emit trigger from App
+            eventBus.$on('resetEverything', () => {
+                this.logs = [];
+            })
         }
     }
 </script>

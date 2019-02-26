@@ -14,8 +14,8 @@
         data() {
             return {
                 health: 100,
-                minAttack: 2,
-                maxAttack: 5
+                minDmg: 2,
+                maxDmg: 5
             }
         },
         created() {
@@ -30,9 +30,15 @@
                 }
                 else {
                     // Roll for damage and emit 'monsterHasAttacked' trigger to Player component
-                    const roll = Math.max(Math.floor((Math.random() * this.maxAttack)) + 1, this.minAttack);
+                    const roll = Math.max(Math.floor((Math.random() * this.maxDmg)) + 1, this.minDmg);
                     eventBus.$emit('monsterHasAttacked', roll);
                 }
+            }),
+            // Listen for 'resetEverything' emit trigger from App
+            eventBus.$on('resetEverything', () => {
+                this.health = 100;
+                this.minDmg = 2;
+                this.maxDmg = 5;
             })
         }
     }

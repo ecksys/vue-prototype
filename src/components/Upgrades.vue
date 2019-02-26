@@ -72,6 +72,15 @@
                     eventBus.$emit('updatePlayerArmor', this.currentArmor); // Emit 'updatePlayerArmor' to Player component
                 }
             }
+        },
+        created() {
+            // Listen for 'resetEverything' emit trigger from App
+            eventBus.$on('resetEverything', () => {
+                this.weaponLvl = 0;
+                this.armorLvl = 0;
+                this.currentWeapon = weapons[0];
+                this.currentArmor = armor[0];
+            })
         }
     }
 </script>

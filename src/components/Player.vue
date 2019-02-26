@@ -70,6 +70,13 @@
             // Listen for 'updatePlayerArmor' emit trigger from Upgrade component
             eventBus.$on('updatePlayerArmor', (armor) => {
                 this.armorRating = armor.rating;
+            }),
+            // Listen for 'resetEverything' emit trigger from App
+            eventBus.$on('resetEverything', () => {
+                this.health = 100;
+                this.minDmg = 1;
+                this.maxDmg = 1;
+                this.armorRating = 0;
             })
         }
     }

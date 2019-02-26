@@ -11,6 +11,11 @@
 			<div class="row">
 				<app-upgrades></app-upgrades>
 			</div>
+			<div class="row">
+				<div class="col">
+					<button @click="newGame">New Game</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,6 +33,12 @@
 			'AppMonster': Monster,
 			'AppLog': Log,
 			'AppUpgrades': Upgrades
+		},
+		methods: {
+			newGame() {
+				// Emit 'resetEverything' trigger to all components
+				eventBus.$emit('resetEverything');
+			}
 		},
 		created() {
 			// Listen for 'playerHasDied' emit trigger from Player component
