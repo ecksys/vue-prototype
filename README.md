@@ -2,7 +2,13 @@
 
 A simple browser-based game created using Vue.JS in order to explore and learn Vue.JS.
 
+Play this prototype at: http://hellomynameisnate.com/staging/vue-prototype!
+
 ## Release Notes
+
+### v1.0.1
+
+- Deployed, this prototype is now live!
 
 ### v1.0
 
