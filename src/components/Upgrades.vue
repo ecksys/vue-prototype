@@ -11,18 +11,20 @@
                 <h3>Weapon</h3>
                 <p>{{ currentWeapon.name }}</p>
                 <p>{{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
-                <button @click="upgradeWeapon">Upgrade (${{ currentWeapon.upgradeCost}}) </button>
+                <button v-if="isMaxWeapon" disabled>Max Weapon</button>
+                <button v-else @click="upgradeWeapon">Upgrade (${{ currentWeapon.upgradeCost}})</button>
             </div>
             <div class="col">
                 <h3>Armor</h3>
                 <p>{{ currentArmor.name }}</p>
                 <p>{{ currentArmor.rating }}</p>
-                <button @click="upgradeArmor">Upgrade (${{ currentArmor.upgradeCost}})</button>
+                <button v-if="isMaxArmor" disabled>Max Armor</button>
+                <button v-else @click="upgradeArmor">Upgrade (${{ currentArmor.upgradeCost}})</button>
             </div>
             <div class="col">
                 <h3>Special Name</h3>
                 <p>Special Damage</p>
-                <button>Upgrade</button>
+                <button disabled>Upgrade</button>
             </div>
         </div>
     </div>
@@ -56,7 +58,9 @@
     export default {
         data() {
             return {
-                gold: 100,
+                isMaxWeapon: false,
+                isMaxArmor: false,
+                gold: 1000,
                 weaponLvl: 0,
                 armorLvl: 0,
                 currentWeapon: weapons[0],
@@ -78,6 +82,11 @@
                             timestamp: 'U-' + Date.now(), // Timestamp used to generate key for the v-bind:key
                             text: 'You upgraded your weapon.'
                         });
+
+                        // If this is the last weapon, set 'isMaxWeapon' to true
+                        if(this.weaponLvl == (weapons.length - 1)) {
+                            this.isMaxWeapon = true;
+                        }
                     }
                     else {
                         this.moneyNotEnough();
@@ -105,6 +114,11 @@
                             timestamp: 'U-' + Date.now(), // Timestamp used to generate key for the v-bind:key
                             text: 'You upgraded your armor.'
                         });
+
+                        // If this is the last armor, set 'isMaxArmor' to true
+                        if(this.armorLvl == (armor.length - 1)) {
+                            this.isMaxArmor = true;
+                        }
                     }
                     else {
                         this.moneyNotEnough();
@@ -129,6 +143,8 @@
         created() {
             // Listen for 'resetEverything' emit trigger from App
             eventBus.$on('resetEverything', () => {
+                this.isMaxWeapon = false;
+                this.isMaxArmor = false;
                 this.gold = 100;
                 this.weaponLvl = 0;
                 this.armorLvl = 0;

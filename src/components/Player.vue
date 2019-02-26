@@ -5,7 +5,7 @@
             <div class="progress-bar bg-success" :style="{ width: health + '%' }">{{ health }}</div>
         </div>
         <button @click="playerAttack">Attack</button>
-        <button>Special</button>
+        <button disabled>Special</button>
     </div>
 </template>
 
