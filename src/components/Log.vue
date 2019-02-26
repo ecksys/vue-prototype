@@ -2,14 +2,14 @@
     <div class="col interface__panel">
         <h2>Game Log</h2>
         <ul>
-            <li v-for="log in logs" :key="log.timestamp">{{ log.text }}</li>
+            <li v-for="log in logs" :key="log.key">{{ log.msg }}</li>
         </ul>
     </div>
 </template>
 
 <script>
     import { eventBus } from '../main';
-
+    
     export default {
         data() {
             return {
@@ -17,18 +17,12 @@
             }
         },
         created() {
-            // Listen for 'printLog' emit trigger from Player/Monster components
-            eventBus.$on('printLog', (log) => {
-                // If the log has more than 9 entries, remove the last one
-                if(this.logs.length > 9) {
-                    this.logs.splice(-1,1);
-                }
-
-                this.logs.unshift(log); // Add the latest log to the start of the array
-            }),
-            // Listen for 'resetEverything' emit trigger from App
-            eventBus.$on('resetEverything', () => {
-                this.logs = [];
+            eventBus.$on('updateLog', (text) => {
+                // Create an object with a unique ID that is added to the start of the log array
+                const uid = (Math.floor(Math.random() * 9000) + 1000) + '' + (Math.floor(Math.random() * 9000) + 1000);
+                const obj = { key: uid, msg: text};
+                if(this.logs.length == 8) this.logs.splice(-1, 1);
+                this.logs.unshift(obj);
             })
         }
     }
