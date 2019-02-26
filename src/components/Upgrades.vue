@@ -60,7 +60,7 @@
             return {
                 isMaxWeapon: false,
                 isMaxArmor: false,
-                gold: 1000,
+                gold: 100,
                 weaponLvl: 0,
                 armorLvl: 0,
                 currentWeapon: weapons[0],

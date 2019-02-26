@@ -6,6 +6,10 @@ Play this prototype at: http://hellomynameisnate.com/staging/vue-prototype!
 
 ## Release Notes
 
+### v1.0.2
+
+- Oops, forgot to reset the currency back to pre-test figures.
+
 ### v1.0.1
 
 - Deployed, this prototype is now live!
