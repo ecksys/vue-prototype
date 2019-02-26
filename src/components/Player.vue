@@ -24,7 +24,7 @@
         methods: {
             playerAttack() {
                 // Roll for damage and emit 'playerHasAttacked' trigger to Monster component
-                const roll = Math.max(Math.floor((Math.random() * this.maxDmg)) + 1, this.minDmg);
+                const roll = Math.max(Math.floor((Math.random() * this.maxDmg) + 1), this.minDmg);
                 eventBus.$emit('playerHasAttacked', roll);
 
                 // Emit 'printLog' trigger to Log component

@@ -6,10 +6,8 @@
 				<app-monster></app-monster>
 			</div>
 			<div class="row">
-				<app-log></app-log>
-			</div>
-			<div class="row">
 				<app-upgrades></app-upgrades>
+				<app-log></app-log>
 			</div>
 			<div class="row">
 				<div class="col">
@@ -56,6 +54,9 @@
 					timestamp: Date.now(), // Timestamp used to generate key for the v-bind:key
 					text: 'You killed the monster!'
 				});
+
+				// Emit 'getReward' trigger to Upgrades component
+				eventBus.$emit('getReward');
 			})
 		}
 	}
