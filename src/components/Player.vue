@@ -2,7 +2,7 @@
     <div class="col-sm-12 col-md-6 interface__panel">
         <h2>Player</h2>
         <div class="progress">
-            <div class="progress-bar bg-success" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
+            <div class="progress-bar" :class="{ 'bg-success': !isCritical, 'bg-danger': isCritical }" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
         <button @click="actionAttack" class="btn btn-danger" :disabled="!isPlayerAlive">Attack</button>
         <button @click="actionHeal" class="btn btn-primary" :disabled="!isPlayerAlive">Heal</button>
@@ -16,6 +16,7 @@
         props: ['isPlayerAlive'],
         data() {
             return {
+                isCritical: false,
                 health: 100,
                 totalHealth: 100,
                 minDmg: 1,
@@ -26,6 +27,7 @@
         },
         methods: {
             reset() {
+                this.isCritical = false;
                 this.health = 100;
                 this.totalHealth = 100;
                 this.minDmg = 1;
@@ -60,6 +62,9 @@
                 // Adjust the damage based on the armor rating before taking damage
                 (damage - this.armorRating) < 0 ? damage = 0 : damage -= this.armorRating;
                 this.health -= damage;
+
+                // Set isCritical to true if health is less than 25%
+                Math.floor((this.health/this.totalHealth * 100) < 25) ? this.isCritical = true : this.isCritical = false;
 
                 if(this.health <= 0) {
                     // Set the health to 0 and let the app know that player has died

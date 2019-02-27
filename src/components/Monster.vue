@@ -5,7 +5,7 @@
             <span v-else>(Level: {{ lvl + 1 }})</span>
         </h2>
         <div class="progress">
-            <div class="progress-bar bg-success" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
+            <div class="progress-bar" :class="{ 'bg-success': !isCritical, 'bg-danger': isCritical }" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
     </div>
 </template>
@@ -34,6 +34,7 @@
             return {
                 lvl: 0,
                 isMaxLvl: false,
+                isCritical: false,
                 health: stats[0].health,
                 totalHealth: stats[0].health
             }
@@ -42,6 +43,7 @@
             reset() {
                 this.lvl = 0;
                 this.isMaxLvl = false;
+                this.isCritical = false;
                 this.health = stats[0].health;
                 this.totalHealth = stats[0].health;
             },
@@ -79,8 +81,11 @@
                 // Take damage from the player's attack
                 this.health -= damage;
 
+                // Set isCritical to true if health is less than 25%
+                Math.floor((this.health/this.totalHealth * 100) < 25) ? this.isCritical = true : this.isCritical = false;
+
                 // Level up the monster if it died, or it attacks instead
-                if(this.health <= 0) { this.lvlUp(); this.loot(); }
+                if(this.health <= 0) { this.isCritical = false; this.lvlUp(); this.loot(); }
                 else this.actionAttack();
             });
         }
