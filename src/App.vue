@@ -57,9 +57,20 @@
 		padding: 5px 20px;
 		border: 0;
 		border-radius: 30px;
+		transition: 0.1s all ease-in-out;
 
 		&:disabled {
 			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		&:focus {
+			outline: 0;
+		}
+
+		&:hover:not([disabled]) {
+			background-color: #09f;
+			color: #fff;
 		}
 	}
 
