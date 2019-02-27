@@ -26,7 +26,7 @@
 						<button @click="newGame" class="btn btn-info">New Game</button>
 					</div>
 					<div class="col text-right">
-						<h6 class="mb-0">v1.2 - Made by Nate Cher - <a target="blank" href="https://github.com/ecksys/vue-prototype">GitHub</a></h6>
+						<h6 class="mb-0">v1.2 | Made By Nate | <a target="blank" href="https://github.com/ecksys/vue-prototype">GitHub</a></h6>
 					</div>
 				</div>
 			</footer>
