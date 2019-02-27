@@ -16,6 +16,11 @@
                 logs: []
             }
         },
+        methods: {
+            reset() {
+                this.logs = [];
+            }
+        },
         created() {
             eventBus.$on('updateLog', (text) => {
                 // Create an object with a unique ID that is added to the start of the log array
