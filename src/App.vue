@@ -20,13 +20,13 @@
 					</div>
 				</div>
 			</div>
-			<footer>
+			<footer class="mb-4">
 				<div class="row align-items-center">
 					<div class="col">
-						<button @click="newGame">New Game</button>
+						<button @click="newGame" class="btn btn-info">New Game</button>
 					</div>
 					<div class="col text-right">
-						<h6 class="mb-0">v1.1 - Made by Nate Cher - <a target="blank" href="https://github.com/ecksys/vue-prototype">GitHub</a></h6>
+						<h6 class="mb-0">v1.2 - Made by Nate Cher - <a target="blank" href="https://github.com/ecksys/vue-prototype">GitHub</a></h6>
 					</div>
 				</div>
 			</footer>
@@ -78,27 +78,6 @@
 <style lang="scss">
 	header {
 		margin-bottom: 20px;
-	}
-
-	button {
-		padding: 5px 20px;
-		border: 0;
-		border-radius: 30px;
-		transition: 0.1s all ease-in-out;
-
-		&:disabled {
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
-
-		&:focus {
-			outline: 0;
-		}
-
-		&:hover:not([disabled]) {
-			background-color: #09f;
-			color: #fff;
-		}
 	}
 
 	.interface {

@@ -1,5 +1,5 @@
 <template>
-    <div class="col interface__panel">
+    <div class="col-sm-12 col-md-6 order-1 order-md-2 interface__panel">
         <h2>Game Log</h2>
         <ul>
             <li v-for="log in logs" :key="log.key" :class="log.type">{{ log.msg }}</li>

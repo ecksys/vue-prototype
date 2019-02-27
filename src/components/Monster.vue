@@ -1,5 +1,5 @@
 <template>
-    <div class="col interface__panel">
+    <div class="col-sm-12 col-md-6 interface__panel">
         <h2>Monster
             <span v-if="isMaxLvl">(Level: Maxed)</span>
             <span v-else>(Level: {{ lvl + 1 }})</span>

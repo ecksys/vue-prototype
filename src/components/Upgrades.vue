@@ -1,35 +1,56 @@
 <template>
-    <div class="col interface__panel">
+    <div class="col-sm-12 col-md-6 order-2 order-md-1 interface__panel">
         <h2>Upgrades</h2>
         <p>Total Gold: {{ gold }}</p>
-        <div class="row mb-3">
-            <div class="col">
-                <h3>Weapon</h3>
-                <p class="mb-0">{{ currentWeapon.name }}</p>
-                <p>Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
-                <button @click="upgrade('weapon')" :disabled="isWeaponMax || !isPlayerAlive">
-                    <span v-if="isWeaponMax">Max Reached</span>
-                    <span v-else>Upgrade ({{ currentWeapon.upgrade }} gold)</span>
-                </button>
+        <div class="row mb-sm-3">
+            <div class="col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col col-sm-12 mb-sm-0">
+                        <h3>Weapon</h3>
+                        <p class="mb-0">{{ currentWeapon.name }}</p>
+                        <p class="mb-0">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
+                        <p>Upgrade: {{ currentWeapon.upgrade }} gold</p>
+                    </div>
+                    <div class="col col-sm-12 text-center text-sm-left">
+                        <button @click="upgrade('weapon')" class="btn btn-warning" :disabled="isWeaponMax || !isPlayerAlive">
+                            <span v-if="isWeaponMax">Max Reached</span>
+                            <span v-else>Upgrade</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <h3>Armor</h3>
-                <p class="mb-0">{{ currentArmor.name }}</p>
-                <p>Rating: {{ currentArmor.rating }}</p>
-                <button @click="upgrade('armor')" :disabled="isArmorMax || !isPlayerAlive">
-                    <span v-if="isArmorMax">Max Reached</span>
-                    <span v-else>Upgrade ({{ currentArmor.upgrade }} gold)</span>
-                </button>
+            <div class="col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col col-sm-12">
+                        <h3>Armor</h3>
+                        <p class="mb-0">{{ currentArmor.name }}</p>
+                        <p class="mb-0">Rating: {{ currentArmor.rating }}</p>
+                        <p>Upgrade: {{ currentArmor.upgrade }} gold</p>
+                    </div>
+                    <div class="col col-sm-12 text-center text-sm-left">
+                        <button @click="upgrade('armor')" class="btn btn-warning" :disabled="isArmorMax || !isPlayerAlive">
+                            <span v-if="isArmorMax">Max Reached</span>
+                            <span v-else>Upgrade</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col">
-                <h3>Heal</h3>
-                <p>Rating: {{ currentHeal.rating }}%</p>
-                <button @click="upgrade('heal')" :disabled="isHealMax || !isPlayerAlive">
-                    <span v-if="isHealMax">Max Reached</span>
-                    <span v-else>Upgrade ({{ currentHeal.upgrade }} gold)</span>
-                </button>
+            <div class="col-sm-6">
+                <div class="row align-items-center">
+                    <div class="col col-sm-12">
+                        <h3>Heal</h3>
+                        <p class="mb-0">Rating: {{ currentHeal.rating }}%</p>
+                        <p>Upgrade: {{ currentHeal.upgrade }} gold</p>
+                    </div>
+                    <div class="col col-sm-12 text-center text-sm-left">
+                        <button @click="upgrade('heal')" class="btn btn-warning" :disabled="isHealMax || !isPlayerAlive">
+                            <span v-if="isHealMax">Max Reached</span>
+                            <span v-else>Upgrade</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

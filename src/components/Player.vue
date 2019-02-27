@@ -1,11 +1,11 @@
 <template>
-    <div class="col interface__panel">
+    <div class="col-sm-12 col-md-6 interface__panel">
         <h2>Player</h2>
         <div class="progress">
             <div class="progress-bar bg-success" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
-        <button @click="actionAttack" :disabled="!isPlayerAlive">Attack</button>
-        <button @click="actionHeal" :disabled="!isPlayerAlive">Heal</button>
+        <button @click="actionAttack" class="btn btn-danger" :disabled="!isPlayerAlive">Attack</button>
+        <button @click="actionHeal" class="btn btn-primary" :disabled="!isPlayerAlive">Heal</button>
     </div>
 </template>
 
