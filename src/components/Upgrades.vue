@@ -10,7 +10,7 @@
                     <div class="col col-sm-12 mb-sm-0">
                         <h3>Weapon</h3>
                         <p class="mb-0">{{ currentWeapon.name }}</p>
-                        <p :class="{ 'mb-0' : !isWeaponMax }">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
+                        <p :class="{ 'mb-0': !isWeaponMax }">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
                         <p v-if="!isWeaponMax">Upgrade: {{ currentWeapon.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
@@ -26,7 +26,7 @@
                     <div class="col col-sm-12">
                         <h3>Armor</h3>
                         <p class="mb-0">{{ currentArmor.name }}</p>
-                        <p :class="{ 'mb-0' : !isArmorMax }">Rating: {{ currentArmor.rating }}</p>
+                        <p :class="{ 'mb-0': !isArmorMax }">Rating: {{ currentArmor.rating }}</p>
                         <p v-if="!isArmorMax">Upgrade: {{ currentArmor.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
@@ -43,7 +43,7 @@
                 <div class="row align-items-center">
                     <div class="col col-sm-12">
                         <h3>Heal</h3>
-                        <p :class="{ 'mb-0' : !isHealMax }">Rating: {{ currentHeal.rating }}%</p>
+                        <p :class="{ 'mb-0': !isHealMax }">Rating: {{ currentHeal.rating }}%</p>
                         <p v-if="!isHealMax">Upgrade: {{ currentHeal.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
@@ -113,7 +113,7 @@
                 isWeaponMax: false,
                 isArmorMax: false,
                 isHealMax: false,
-                gold: 10000,
+                gold: 0,
                 weaponLvl: 0,
                 armorLvl: 0,
                 healLvl: 0,
