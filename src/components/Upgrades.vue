@@ -81,9 +81,10 @@
                 this.currentWeapon = weapons[0];
                 this.currentArmor = armor[0];
             },
-            log(text) {
+            log(text, type = 'upgrade') {
                 // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
+                const logObj = { text: text, type: type }
+                eventBus.$emit('updateLog', logObj);
             },
             upgrade(type) {
                 // Set the item depending if it is a weapon or armor
@@ -105,8 +106,8 @@
                     type == 'weapon' ? item = (this.currentWeapon = weapons[itemLvl]) : item = (this.currentArmor = armor[itemLvl]);
 
                     // Send the upgrade details to the player component
-                    const obj = { type: type, item: item };
-                    eventBus.$emit('upgradePlayer', obj);
+                    const itemObj = { type: type, item: item };
+                    eventBus.$emit('upgradePlayer', itemObj);
                 }
                 else this.log('You have insufficient gold!');
             }

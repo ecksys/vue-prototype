@@ -30,9 +30,10 @@
                 this.maxDmg = 1;
                 this.armor = 0;
             },
-            log(text) {
+            log(text, type = 'player') {
                 // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
+                const logObj = { text: text, type: type }
+                eventBus.$emit('updateLog', logObj);
             },
             attack() {
                 // Roll for damage and emit to the monster component
@@ -57,8 +58,8 @@
                 }
                 else {
                     // If no damage is dealt, print the appropriate log
-                    if(damage == 0) this.log('You deflected the monster\'s attack!')
-                    else this.log('The monster hits you for ' + damage + ' damage.');
+                    if(damage == 0) this.log('You deflected the monster\'s attack!', 'monster')
+                    else this.log('The monster hits you for ' + damage + ' damage.', 'monster');
                 }
             }),
             eventBus.$on('upgradePlayer', (obj) => {

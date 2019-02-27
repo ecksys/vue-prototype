@@ -54,9 +54,10 @@
 			'AppUpgrades': Upgrades
 		},
 		methods: {
-			log(text) {
+			log(text, type = 'system') {
                 // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
+                const logObj = { text: text, type: type }
+                eventBus.$emit('updateLog', logObj);
             },
 			newGame() {
 				// Resurrect the player and reset the game state

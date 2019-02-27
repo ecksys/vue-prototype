@@ -45,9 +45,10 @@
                 this.health = stats[0].health;
                 this.totalHealth = stats[0].health;
             },
-            log(text) {
+            log(text, type = 'monster') {
                 // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
+                const logObj = { text: text, type: type }
+                eventBus.$emit('updateLog', logObj);
             },
             attack() {
                 // Roll for damage and emit to the player component
@@ -66,7 +67,7 @@
             loot() {
                 // Roll for the gold reward and emit to the upgrade component
                 const roll = Math.floor(Math.random() * (stats[this.lvl].maxGold - stats[this.lvl].minGold + 1)) + stats[this.lvl].minGold;
-                this.log('You defeated the monster! You earned ' + roll + ' gold!');
+                this.log('You defeated the monster! You earned ' + roll + ' gold!', 'system');
                 eventBus.$emit('rewardLoot', roll);
             }
         },
