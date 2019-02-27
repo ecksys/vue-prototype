@@ -41,13 +41,13 @@
         methods: {
             reset() {
                 this.lvl = 0;
+                this.isMaxLvl = false;
                 this.health = stats[0].health;
                 this.totalHealth = stats[0].health;
             },
             attack() {
                 // Roll for damage and emit to the player component
                 const roll = Math.floor(Math.random() * (stats[this.lvl].maxDmg - stats[this.lvl].minDmg + 1)) + stats[this.lvl].minDmg;
-                this.log('The monster hits you for ' + roll + ' damage.');
                 eventBus.$emit('monsterAttack', roll);
             },
             lvlUp() {

@@ -42,8 +42,29 @@
         },
         created() {
             eventBus.$on('monsterAttack', (damage) => {
+                // Adjust the damage based on the armor rating before taking damage
+                (damage - this.armor) < 0 ? damage = 0 : damage -= this.armor;
                 this.health -= damage;
-            });
+
+                if(this.health <= this.totalHealth) {
+                    this.health = 0;
+                }
+                else {
+                    // If no damage is dealt, print the appropriate log
+                    if(damage == 0) this.log('You deflected the monster\'s attack!')
+                    else this.log('The monster hits you for ' + damage + ' damage.');
+                }
+            }),
+            eventBus.$on('upgradePlayer', (obj) => {
+                // Update this component with the new details
+                if(obj.type == 'weapon') {
+                    this.minDmg = obj.item.minDmg;
+                    this.maxDmg = obj.item.maxDmg;
+                }
+                else {
+                    this.armor = obj.item.rating;
+                }
+            })
         }
     }
 </script>
