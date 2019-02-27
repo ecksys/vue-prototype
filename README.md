@@ -6,7 +6,18 @@ Play this prototype at: http://hellomynameisnate.com/staging/vue-prototype!
 
 ## Release Notes
 
-### v.1.1.1
+### v1.2
+
+- Changed button styles so that it uses Bootstrap.
+- Changed starting gold to 50.
+- Increased number of logs displayed.
+- Decreased the armor rating. Apparently it was too good.
+- Added critical state to health bars.
+- Added support for mobile. Play on the go!
+- Added mana feature for healing. No more click-spamming!
+- Removed borders around the interface.
+
+### v1.1.1
 
 - Forgot to reset the currency again. I gotta stop doing this.
 
