@@ -4,7 +4,8 @@
         <div class="progress">
             <div class="progress-bar bg-success" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
-        <button @click="attack" :disabled="!isPlayerAlive">Attack</button>
+        <button @click="actionAttack" :disabled="!isPlayerAlive">Attack</button>
+        <button @click="actionHeal" :disabled="!isPlayerAlive">Heal</button>
     </div>
 </template>
 
@@ -19,7 +20,8 @@
                 totalHealth: 100,
                 minDmg: 1,
                 maxDmg: 1,
-                armor: 0
+                armorRating: 0,
+                healRating: 1
             }
         },
         methods: {
@@ -28,18 +30,26 @@
                 this.totalHealth = 100;
                 this.minDmg = 1;
                 this.maxDmg = 1;
-                this.armor = 0;
+                this.armorRating = 0;
+                this.healRating = 1;
             },
             log(text, type = 'player') {
                 // Send a text message to the log component
                 const logObj = { text: text, type: type }
                 eventBus.$emit('updateLog', logObj);
             },
-            attack() {
+            actionAttack() {
                 // Roll for damage and emit to the monster component
                 const roll = Math.floor(Math.random() * (this.maxDmg - this.minDmg + 1)) + this.minDmg;
                 this.log('You hit the monster for ' + roll + ' damage.');
                 eventBus.$emit('playerAttack', roll);
+            },
+            actionHeal() {
+                // Roll for healing, then let monster know to attack
+                const heal = Math.floor(this.totalHealth * (this.healRating / 100));
+                (this.health + heal > this.totalHealth) ? this.health = this.totalHealth : this.health += heal;
+                this.log('You healed ' + heal + ' hit points.');
+                eventBus.$emit('playerAttack', 0);
             }
         },
         created() {
@@ -48,7 +58,7 @@
             }),
             eventBus.$on('monsterAttack', (damage) => {
                 // Adjust the damage based on the armor rating before taking damage
-                (damage - this.armor) < 0 ? damage = 0 : damage -= this.armor;
+                (damage - this.armorRating) < 0 ? damage = 0 : damage -= this.armorRating;
                 this.health -= damage;
 
                 if(this.health <= 0) {
@@ -58,7 +68,7 @@
                 }
                 else {
                     // If no damage is dealt, print the appropriate log
-                    if(damage == 0) this.log('You deflected the monster\'s attack!', 'monster')
+                    if(damage == 0) this.log('You deflect the monster\'s attack!', 'monster')
                     else this.log('The monster hits you for ' + damage + ' damage.', 'monster');
                 }
             }),
@@ -68,8 +78,11 @@
                     this.minDmg = obj.item.minDmg;
                     this.maxDmg = obj.item.maxDmg;
                 }
+                else if(obj.type == 'armor') {
+                    this.armorRating = obj.item.rating;
+                }
                 else {
-                    this.armor = obj.item.rating;
+                    this.healRating = obj.item.rating;
                 }
             })
         }

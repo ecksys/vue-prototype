@@ -2,7 +2,7 @@
     <div class="col interface__panel">
         <h2>Upgrades</h2>
         <p>Total Gold: {{ gold }}</p>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col">
                 <h3>Weapon</h3>
                 <p class="mb-0">{{ currentWeapon.name }}</p>
@@ -16,9 +16,19 @@
                 <h3>Armor</h3>
                 <p class="mb-0">{{ currentArmor.name }}</p>
                 <p>Rating: {{ currentArmor.rating }}</p>
-                <button @click="upgrade('armor')" :disabled="isWeaponMax || !isPlayerAlive">
+                <button @click="upgrade('armor')" :disabled="isArmorMax || !isPlayerAlive">
                     <span v-if="isArmorMax">Max Reached</span>
                     <span v-else>Upgrade ({{ currentArmor.upgrade }} gold)</span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h3>Heal</h3>
+                <p>Rating: {{ currentHeal.rating }}%</p>
+                <button @click="upgrade('heal')" :disabled="isHealMax || !isPlayerAlive">
+                    <span v-if="isHealMax">Max Reached</span>
+                    <span v-else>Upgrade ({{ currentHeal.upgrade }} gold)</span>
                 </button>
             </div>
         </div>
@@ -58,28 +68,49 @@
         { name: 'Mithril Plate', rating: 20, upgrade: 0 }
     ];
 
+    // This spell is pretty important
+    const heal = [
+        { rating: 1, upgrade: 40 },
+        { rating: 2, upgrade: 80 },
+        { rating: 4, upgrade: 120 },
+        { rating: 6, upgrade: 160 },
+        { rating: 8, upgrade: 200 },
+        { rating: 10, upgrade: 240 },
+        { rating: 12, upgrade: 280 },
+        { rating: 14, upgrade: 320 },
+        { rating: 16, upgrade: 360 },
+        { rating: 18, upgrade: 400 },
+        { rating: 20, upgrade: 0 }
+    ];
+
     export default {
         props: ['isPlayerAlive'],
         data() {
             return {
                 isWeaponMax: false,
                 isArmorMax: false,
-                gold: 0,
+                isHealMax: false,
+                gold: 100000,
                 weaponLvl: 0,
                 armorLvl: 0,
+                healLvl: 0,
                 currentWeapon: weapons[0],
-                currentArmor: armor[0]
+                currentArmor: armor[0],
+                currentHeal: heal[0]
             }
         },
         methods: {
             reset() {
                 this.isWeaponMax = false;
                 this.isArmorMax = false;
+                this.isHealMax = false;
                 this.gold = 0;
                 this.weaponLvl = 0;
                 this.armorLvl = 0;
+                this.healLvl = 0;
                 this.currentWeapon = weapons[0];
                 this.currentArmor = armor[0];
+                this.currentHeal = heal[0];
             },
             log(text, type = 'upgrade') {
                 // Send a text message to the log component
@@ -87,23 +118,44 @@
                 eventBus.$emit('updateLog', logObj);
             },
             upgrade(type) {
-                // Set the item depending if it is a weapon or armor
-                let item = this.currentWeapon,
-                    itemLvl = this.weaponLvl,
-                    itemMaxLvl = weapons.length - 1;
+                let item, itemLvl, itemMaxLvl;
 
-                if(type == 'armor') {
+                // Set the item depending on the type
+                if(type == 'weapon') {
+                    item = this.currentWeapon;
+                    itemLvl = this.weaponLvl;
+                    itemMaxLvl = weapons.length - 1;
+                }
+                else if(type == 'armor') {
                     item = this.currentArmor;
                     itemLvl = this.armorLvl;
                     itemMaxLvl = armor.length - 1;
+                }
+                else {
+                    item = this.currentHeal;
+                    itemLvl = this.healLvl;
+                    itemMaxLvl = heal.length - 1;
                 }
 
                 // Run this only if the player has enough gold
                 if(this.gold >= item.upgrade) {
                     this.gold -= item.upgrade;
-                    if(itemLvl++ < itemMaxLvl) { type == 'weapon' ? this.weaponLvl++ : this.armorLvl++; }
-                    if(itemLvl == itemMaxLvl) { type == 'weapon' ? this.isWeaponMax = true : this.isArmorMax = true; }
-                    type == 'weapon' ? item = (this.currentWeapon = weapons[itemLvl]) : item = (this.currentArmor = armor[itemLvl]);
+
+                    if(itemLvl++ < itemMaxLvl) {
+                        if(type == 'weapon') this.weaponLvl++;
+                        else if(type == 'armor') this.armorLvl++;
+                        else this.healLvl++;
+                    }
+
+                    if(itemLvl == itemMaxLvl) {
+                        if(type == 'weapon') this.isWeaponMax = true;
+                        else if(type == 'armor') this.isArmorMax = true;
+                        else this.isHealMax = true;
+                    }
+
+                    if(type == 'weapon') item = (this.currentWeapon = weapons[itemLvl]);
+                    else if(type == 'armor') item = (this.currentArmor = armor[itemLvl]);
+                    else item = (this.currentHeal = heal[itemLvl])
 
                     // Send the upgrade details to the player component
                     const itemObj = { type: type, item: item };

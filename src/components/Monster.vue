@@ -50,7 +50,7 @@
                 const logObj = { text: text, type: type }
                 eventBus.$emit('updateLog', logObj);
             },
-            attack() {
+            actionAttack() {
                 // Roll for damage and emit to the player component
                 const roll = Math.floor(Math.random() * (stats[this.lvl].maxDmg - stats[this.lvl].minDmg + 1)) + stats[this.lvl].minDmg;
                 eventBus.$emit('monsterAttack', roll);
@@ -81,7 +81,7 @@
 
                 // Level up the monster if it died, or it attacks instead
                 if(this.health <= 0) { this.lvlUp(); this.loot(); }
-                else this.attack();
+                else this.actionAttack();
             });
         }
     }
