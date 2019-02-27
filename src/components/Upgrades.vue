@@ -7,7 +7,7 @@
                 <h3>Weapon</h3>
                 <p class="mb-0">{{ currentWeapon.name }}</p>
                 <p>Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
-                <button @click="upgrade('weapon')" :disabled="isWeaponMax">
+                <button @click="upgrade('weapon')" :disabled="isWeaponMax || !isPlayerAlive">
                     <span v-if="isWeaponMax">Max Reached</span>
                     <span v-else>Upgrade ({{ currentWeapon.upgrade }} gold)</span>
                 </button>
@@ -16,7 +16,7 @@
                 <h3>Armor</h3>
                 <p class="mb-0">{{ currentArmor.name }}</p>
                 <p>Rating: {{ currentArmor.rating }}</p>
-                <button @click="upgrade('armor')" :disabled="isArmorMax">
+                <button @click="upgrade('armor')" :disabled="isWeaponMax || !isPlayerAlive">
                     <span v-if="isArmorMax">Max Reached</span>
                     <span v-else>Upgrade ({{ currentArmor.upgrade }} gold)</span>
                 </button>
@@ -59,11 +59,12 @@
     ];
 
     export default {
+        props: ['isPlayerAlive'],
         data() {
             return {
-                gold: 0,
                 isWeaponMax: false,
                 isArmorMax: false,
+                gold: 0,
                 weaponLvl: 0,
                 armorLvl: 0,
                 currentWeapon: weapons[0],
@@ -72,13 +73,17 @@
         },
         methods: {
             reset() {
-                this.gold = 0;
                 this.isWeaponMax = false;
                 this.isArmorMax = false;
+                this.gold = 0;
                 this.weaponLvl = 0;
                 this.armorLvl = 0;
                 this.currentWeapon = weapons[0];
                 this.currentArmor = armor[0];
+            },
+            log(text) {
+                // Send a text message to the log component
+                eventBus.$emit('updateLog', text);
             },
             upgrade(type) {
                 // Set the item depending if it is a weapon or armor
@@ -103,9 +108,13 @@
                     const obj = { type: type, item: item };
                     eventBus.$emit('upgradePlayer', obj);
                 }
+                else this.log('You have insufficient gold!');
             }
         },
         created() {
+            eventBus.$on('resetTheGame', () => {
+                this.reset();
+            }),
             eventBus.$on('rewardLoot', (gold) =>{
                 // Reward the player with an amount of gold
                 this.gold += gold;

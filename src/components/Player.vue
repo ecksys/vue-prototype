@@ -4,7 +4,7 @@
         <div class="progress">
             <div class="progress-bar bg-success" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
-        <button @click="attack">Attack</button>
+        <button @click="attack" :disabled="!isPlayerAlive">Attack</button>
     </div>
 </template>
 
@@ -12,6 +12,7 @@
     import { eventBus } from '../main';
     
     export default {
+        props: ['isPlayerAlive'],
         data() {
             return {
                 health: 100,
@@ -29,25 +30,30 @@
                 this.maxDmg = 1;
                 this.armor = 0;
             },
+            log(text) {
+                // Send a text message to the log component
+                eventBus.$emit('updateLog', text);
+            },
             attack() {
                 // Roll for damage and emit to the monster component
                 const roll = Math.floor(Math.random() * (this.maxDmg - this.minDmg + 1)) + this.minDmg;
                 this.log('You hit the monster for ' + roll + ' damage.');
                 eventBus.$emit('playerAttack', roll);
-            },
-            log(text) {
-                // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
             }
         },
         created() {
+            eventBus.$on('resetTheGame', () => {
+                this.reset();
+            }),
             eventBus.$on('monsterAttack', (damage) => {
                 // Adjust the damage based on the armor rating before taking damage
                 (damage - this.armor) < 0 ? damage = 0 : damage -= this.armor;
                 this.health -= damage;
 
                 if(this.health <= 0) {
+                    // Set the health to 0 and let the app know that player has died
                     this.health = 0;
+                    eventBus.$emit('playerHasDied');
                 }
                 else {
                     // If no damage is dealt, print the appropriate log

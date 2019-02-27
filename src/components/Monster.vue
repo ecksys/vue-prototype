@@ -45,6 +45,10 @@
                 this.health = stats[0].health;
                 this.totalHealth = stats[0].health;
             },
+            log(text) {
+                // Send a text message to the log component
+                eventBus.$emit('updateLog', text);
+            },
             attack() {
                 // Roll for damage and emit to the player component
                 const roll = Math.floor(Math.random() * (stats[this.lvl].maxDmg - stats[this.lvl].minDmg + 1)) + stats[this.lvl].minDmg;
@@ -64,13 +68,12 @@
                 const roll = Math.floor(Math.random() * (stats[this.lvl].maxGold - stats[this.lvl].minGold + 1)) + stats[this.lvl].minGold;
                 this.log('You defeated the monster! You earned ' + roll + ' gold!');
                 eventBus.$emit('rewardLoot', roll);
-            },
-            log(text) {
-                // Send a text message to the log component
-                eventBus.$emit('updateLog', text);
             }
         },
         created() {
+            eventBus.$on('resetTheGame', () => {
+                this.reset();
+            }),
             eventBus.$on('playerAttack', (damage) => {
                 // Take damage from the player's attack
                 this.health -= damage;

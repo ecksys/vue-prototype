@@ -22,6 +22,9 @@
             }
         },
         created() {
+            eventBus.$on('resetTheGame', () => {
+                this.reset();
+            }),
             eventBus.$on('updateLog', (text) => {
                 // Create an object with a unique ID that is added to the start of the log array
                 const uid = (Math.floor(Math.random() * 9000) + 1000) + '' + (Math.floor(Math.random() * 9000) + 1000);

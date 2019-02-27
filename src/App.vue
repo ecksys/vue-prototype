@@ -4,29 +4,32 @@
 			<div class="row">
 				<div class="col">
 					<header>
-						<h1 class="text-center">An Untitled Vue Game</h1>
+						<h1 class="mt-4 text-center">An Untitled Vue Game</h1>
 					</header>
 				</div>
 			</div>
 			<div class="row interface">
 				<div class="col">
 					<div class="row">
-						<app-player></app-player>
+						<app-player :isPlayerAlive="isPlayerAlive"></app-player>
 						<app-monster></app-monster>
 					</div>
 					<div class="row">
-						<app-upgrades></app-upgrades>
+						<app-upgrades :isPlayerAlive="isPlayerAlive"></app-upgrades>
 						<app-log></app-log>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<footer class="text-right">
+			<footer>
+				<div class="row align-items-center">
+					<div class="col">
+						<button @click="newGame">New Game</button>
+					</div>
+					<div class="col text-right">
 						<h6 class="mb-0">verson 1.1 - Made by Nate Cher</h6>
-					</footer>
+					</div>
 				</div>
-			</div>
+			</footer>
 		</div>
 	</div>
 </template>
@@ -39,11 +42,34 @@
 	import Upgrades from './components/Upgrades.vue';
 	
 	export default {
+		data() {
+			return {
+				isPlayerAlive: true
+			}
+		},
 		components: {
 			'AppPlayer': Player,
 			'AppMonster': Monster,
 			'AppLog': Log,
 			'AppUpgrades': Upgrades
+		},
+		methods: {
+			log(text) {
+                // Send a text message to the log component
+                eventBus.$emit('updateLog', text);
+            },
+			newGame() {
+				// Resurrect the player and reset the game state
+				this.isPlayerAlive = true;
+				eventBus.$emit('resetTheGame');
+			}
+		},
+		created() {
+			eventBus.$on('playerHasDied', () => {
+				// Kill the player and print the log
+				this.isPlayerAlive = false;
+				this.log('You died! Click on \'New Game\' to try again.');
+			})
 		}
 	}
 </script>
@@ -75,6 +101,7 @@
 	}
 
 	.interface {
+		min-height: 300px;
 		margin-bottom: 20px;
 		border: 1px solid rgba(0, 0, 0, 0.5);
 
