@@ -4,6 +4,9 @@
         <div class="progress">
             <div class="progress-bar" :class="{ 'bg-success': !isCritical, 'bg-danger': isCritical }" :style="{ width: ((health/totalHealth) * 100) + '%' }">{{ health }}</div>
         </div>
+        <div class="progress">
+            <div class="progress-bar" :style="{ width: ((mana/totalMana) * 100) + '%' }">{{ mana }}</div>
+        </div>
         <button @click="actionAttack" class="btn btn-danger" :disabled="!isPlayerAlive">Attack</button>
         <button @click="actionHeal" class="btn btn-primary" :disabled="!isPlayerAlive">Heal</button>
     </div>
@@ -19,10 +22,14 @@
                 isCritical: false,
                 health: 100,
                 totalHealth: 100,
+                mana: 75,
+                totalMana: 75,
                 minDmg: 1,
                 maxDmg: 1,
                 armorRating: 0,
-                healRating: 1
+                healRating: 1,
+                healCost: 10,
+                manaRecovery: 3
             }
         },
         methods: {
@@ -30,10 +37,14 @@
                 this.isCritical = false;
                 this.health = 100;
                 this.totalHealth = 100;
+                this.mana = 75;
+                this.totalMana = 75;
                 this.minDmg = 1;
                 this.maxDmg = 1;
                 this.armorRating = 0;
                 this.healRating = 1;
+                this.healCost = 10;
+                this.manaRecovery = 3;
             },
             log(text, type = 'player') {
                 // Send a text message to the log component
@@ -41,17 +52,29 @@
                 eventBus.$emit('updateLog', logObj);
             },
             actionAttack() {
+                // Recover some mana whenever player attacks
+                if(this.mana < this.totalMana)
+                    (this.mana + this.manaRecovery) > this.totalMana ? this.mana = this.totalMana : this.mana += this.manaRecovery;
+
                 // Roll for damage and emit to the monster component
                 const roll = Math.floor(Math.random() * (this.maxDmg - this.minDmg + 1)) + this.minDmg;
                 this.log('You hit the monster for ' + roll + ' damage.');
                 eventBus.$emit('playerAttack', roll);
             },
             actionHeal() {
-                // Roll for healing, then let monster know to attack
-                const heal = Math.floor(this.totalHealth * (this.healRating / 100));
-                (this.health + heal > this.totalHealth) ? this.health = this.totalHealth : this.health += heal;
-                this.log('You healed ' + heal + ' hit points.');
-                eventBus.$emit('playerAttack', 0);
+                if(this.mana - this.healCost >= 0) {
+                    // Spend the mana for healing
+                    this.mana -= this.healCost;
+
+                    // Roll for healing, then let monster know to attack
+                    const heal = Math.floor(this.totalHealth * (this.healRating / 100));
+                    (this.health + heal > this.totalHealth) ? this.health = this.totalHealth : this.health += heal;
+                    this.log('You healed ' + heal + ' hit points.');
+                    eventBus.$emit('playerAttack', 0);
+                }
+                else {
+                    this.log('You don\'t have enough mana!');
+                }
             }
         },
         created() {
@@ -88,6 +111,8 @@
                 }
                 else {
                     this.healRating = obj.item.rating;
+                    this.healCost = obj.item.cost;
+                    this.manaRecovery = obj.item.recovery;
                 }
             })
         }

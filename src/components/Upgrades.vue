@@ -4,10 +4,10 @@
         <div class="alert alert-warning" role="alert">
             <p class="mb-0">Gold: {{ gold }}</p>
         </div>
-        <div class="row mb-sm-3">
-            <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
                 <div class="row align-items-center">
-                    <div class="col col-sm-12 mb-sm-0">
+                    <div class="col col-sm-12">
                         <h3>Weapon</h3>
                         <p class="mb-0">{{ currentWeapon.name }}</p>
                         <p :class="{ 'mb-0': !isWeaponMax }">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-lg-4 mb-3 mb-lg-0">
                 <div class="row align-items-center">
                     <div class="col col-sm-12">
                         <h3>Armor</h3>
@@ -37,13 +37,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-lg-4">
                 <div class="row align-items-center">
                     <div class="col col-sm-12">
                         <h3>Heal</h3>
-                        <p :class="{ 'mb-0': !isHealMax }">Rating: {{ currentHeal.rating }}%</p>
+                        <p class="mb-0">Rating: {{ currentHeal.rating }}%</p>
+                        <p :class="{ 'mb-0': !isHealMax }">Mana Cost: {{ currentHeal.cost }}</p>
                         <p v-if="!isHealMax">Upgrade: {{ currentHeal.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
@@ -93,17 +92,17 @@
 
     // This spell is pretty important
     const heal = [
-        { rating: 1, upgrade: 40 },
-        { rating: 2, upgrade: 80 },
-        { rating: 4, upgrade: 120 },
-        { rating: 6, upgrade: 160 },
-        { rating: 8, upgrade: 200 },
-        { rating: 10, upgrade: 240 },
-        { rating: 12, upgrade: 280 },
-        { rating: 14, upgrade: 320 },
-        { rating: 16, upgrade: 360 },
-        { rating: 18, upgrade: 400 },
-        { rating: 20, upgrade: 0 }
+        { cost: 10, rating: 1, recovery: 3, upgrade: 40 },
+        { cost: 10, rating: 2, recovery: 3, upgrade: 80 },
+        { cost: 9, rating: 4, recovery: 4, upgrade: 120 },
+        { cost: 9, rating: 6, recovery: 4, upgrade: 160 },
+        { cost: 8, rating: 8, recovery: 5, upgrade: 200 },
+        { cost: 8, rating: 10, recovery: 5, upgrade: 240 },
+        { cost: 7, rating: 12, recovery: 6, upgrade: 280 },
+        { cost: 7, rating: 14, recovery: 6, upgrade: 320 },
+        { cost: 6, rating: 16, recovery: 7, upgrade: 360 },
+        { cost: 6, rating: 18, recovery: 7, upgrade: 400 },
+        { cost: 5, rating: 20, recovery: 10, upgrade: 0 }
     ];
 
     export default {
@@ -113,7 +112,7 @@
                 isWeaponMax: false,
                 isArmorMax: false,
                 isHealMax: false,
-                gold: 0,
+                gold: 50,
                 weaponLvl: 0,
                 armorLvl: 0,
                 healLvl: 0,
