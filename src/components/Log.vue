@@ -30,7 +30,7 @@
                 const uid = (Math.floor(Math.random() * 9000) + 1000) + '' + (Math.floor(Math.random() * 9000) + 1000);
                 const logObj = { key: uid, msg: obj.text, type: obj.type};
                 // If there are 8 items, remove the last one before adding the latest log
-                if(this.logs.length == 8) this.logs.splice(-1, 1);
+                if(this.logs.length == 10) this.logs.splice(-1, 1);
                 this.logs.unshift(logObj);
             })
         }
