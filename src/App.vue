@@ -83,12 +83,10 @@
 	.interface {
 		min-height: 300px;
 		margin-bottom: 20px;
-		border: 1px solid rgba(0, 0, 0, 0.5);
 
 		&__panel {
 			padding-top: 10px;
 			padding-bottom: 10px;
-			border: 1px solid rgba(0, 0, 0, 0.5);
 		}
 	}
 </style>
