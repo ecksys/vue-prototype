@@ -1,7 +1,9 @@
 <template>
     <div class="col-sm-12 col-md-6 order-2 order-md-1 interface__panel">
         <h2>Upgrades</h2>
-        <p>Total Gold: {{ gold }}</p>
+        <div class="alert alert-warning" role="alert">
+            <p class="mb-0">Gold: {{ gold }}</p>
+        </div>
         <div class="row mb-sm-3">
             <div class="col-sm-6">
                 <div class="row align-items-center">
