@@ -8,12 +8,12 @@
                     <div class="col col-sm-12 mb-sm-0">
                         <h3>Weapon</h3>
                         <p class="mb-0">{{ currentWeapon.name }}</p>
-                        <p class="mb-0">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
-                        <p>Upgrade: {{ currentWeapon.upgrade }} gold</p>
+                        <p :class="{ 'mb-0' : !isWeaponMax }">Damage: {{ currentWeapon.minDmg }} - {{ currentWeapon.maxDmg }}</p>
+                        <p v-if="!isWeaponMax">Upgrade: {{ currentWeapon.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
                         <button @click="upgrade('weapon')" class="btn btn-warning" :disabled="isWeaponMax || !isPlayerAlive">
-                            <span v-if="isWeaponMax">Max Reached</span>
+                            <span v-if="isWeaponMax">Max</span>
                             <span v-else>Upgrade</span>
                         </button>
                     </div>
@@ -24,12 +24,12 @@
                     <div class="col col-sm-12">
                         <h3>Armor</h3>
                         <p class="mb-0">{{ currentArmor.name }}</p>
-                        <p class="mb-0">Rating: {{ currentArmor.rating }}</p>
-                        <p>Upgrade: {{ currentArmor.upgrade }} gold</p>
+                        <p :class="{ 'mb-0' : !isArmorMax }">Rating: {{ currentArmor.rating }}</p>
+                        <p v-if="!isArmorMax">Upgrade: {{ currentArmor.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
                         <button @click="upgrade('armor')" class="btn btn-warning" :disabled="isArmorMax || !isPlayerAlive">
-                            <span v-if="isArmorMax">Max Reached</span>
+                            <span v-if="isArmorMax">Max</span>
                             <span v-else>Upgrade</span>
                         </button>
                     </div>
@@ -41,12 +41,12 @@
                 <div class="row align-items-center">
                     <div class="col col-sm-12">
                         <h3>Heal</h3>
-                        <p class="mb-0">Rating: {{ currentHeal.rating }}%</p>
-                        <p>Upgrade: {{ currentHeal.upgrade }} gold</p>
+                        <p :class="{ 'mb-0' : !isHealMax }">Rating: {{ currentHeal.rating }}%</p>
+                        <p v-if="!isHealMax">Upgrade: {{ currentHeal.upgrade }} gold</p>
                     </div>
                     <div class="col col-sm-12 text-center text-sm-left">
                         <button @click="upgrade('heal')" class="btn btn-warning" :disabled="isHealMax || !isPlayerAlive">
-                            <span v-if="isHealMax">Max Reached</span>
+                            <span v-if="isHealMax">Max</span>
                             <span v-else>Upgrade</span>
                         </button>
                     </div>
@@ -111,7 +111,7 @@
                 isWeaponMax: false,
                 isArmorMax: false,
                 isHealMax: false,
-                gold: 0,
+                gold: 10000,
                 weaponLvl: 0,
                 armorLvl: 0,
                 healLvl: 0,
