@@ -79,15 +79,15 @@
     // You're gonna need this
     const armor = [
         { name: 'None', rating: 0, upgrade: 30 },
-        { name: 'Padded', rating: 2, upgrade: 60 },
-        { name: 'Leather', rating: 4, upgrade: 90 },
-        { name: 'Studded Leather', rating: 6, upgrade: 120 },
-        { name: 'Bronze Chainmail', rating: 8, upgrade: 150 },
-        { name: 'Bronze Plate', rating: 10, upgrade: 180 },
-        { name: 'Iron Chainmail', rating: 12, upgrade: 210 },
-        { name: 'Iron Plate', rating: 14, upgrade: 240 },
-        { name: 'Steel Chainmail', rating: 16, upgrade: 270 },
-        { name: 'Steel Plate', rating: 18, upgrade: 300 },
+        { name: 'Padded', rating: 1, upgrade: 60 },
+        { name: 'Leather', rating: 3, upgrade: 90 },
+        { name: 'Studded Leather', rating: 5, upgrade: 120 },
+        { name: 'Bronze Chainmail', rating: 7, upgrade: 150 },
+        { name: 'Bronze Plate', rating: 9, upgrade: 180 },
+        { name: 'Iron Chainmail', rating: 11, upgrade: 210 },
+        { name: 'Iron Plate', rating: 13, upgrade: 240 },
+        { name: 'Steel Chainmail', rating: 15, upgrade: 270 },
+        { name: 'Steel Plate', rating: 17, upgrade: 300 },
         { name: 'Mithril Plate', rating: 20, upgrade: 0 }
     ];
 
