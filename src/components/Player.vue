@@ -46,7 +46,7 @@
                 (damage - this.armor) < 0 ? damage = 0 : damage -= this.armor;
                 this.health -= damage;
 
-                if(this.health <= this.totalHealth) {
+                if(this.health <= 0) {
                     this.health = 0;
                 }
                 else {
