@@ -90,7 +90,7 @@
                 isWeaponMax: false,
                 isArmorMax: false,
                 isHealMax: false,
-                gold: 100000,
+                gold: 0,
                 weaponLvl: 0,
                 armorLvl: 0,
                 healLvl: 0,

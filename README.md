@@ -6,6 +6,10 @@ Play this prototype at: http://hellomynameisnate.com/staging/vue-prototype!
 
 ## Release Notes
 
+### v.1.1.1
+
+- Forgot to reset the currency again. I gotta stop doing this.
+
 ### v1.1
 
 - Restructured code so it's a lot more logical.
