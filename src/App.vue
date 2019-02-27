@@ -81,7 +81,6 @@
 	}
 
 	.interface {
-		min-height: 300px;
 		margin-bottom: 20px;
 
 		&__panel {
